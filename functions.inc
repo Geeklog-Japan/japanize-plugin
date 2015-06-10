@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/functions.inc                                    |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2012 by the following authors:                         |
+// | Copyright (C) 2009-2013 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -39,7 +39,7 @@ if (file_exists($langfile)) {
 }
 
 require_once 'version.php';
-require_once $_CONF['path'] . 'plugins/japanize/data.php';
+require_once $_CONF['path'] . 'plugins/japanize/japanize_data.php';
 
 if (!is_callable('CUSTOM_convertEncoding') AND
 	!is_callable('CUSTOM_emailEscape') AND
@@ -289,6 +289,7 @@ function plugin_upgrade_japanize() {
 }
 
 function plugin_autouninstall_japanize() {
+	// Undoes all Japanizations
 	for ($type = 1; $type <= 5; $type ++) {
 		JAPANIZE_execute($type, 'en');
 	}
@@ -302,13 +303,13 @@ function plugin_autouninstall_japanize() {
 	);
 }
 
-/**
-* @return        boolean       Returns true if moderator
-*/
-function plugin_ismoderator_japanize() {
-	return TRUE;
-}
-
+# /**
+# * @return        boolean       Returns true if moderator
+# */
+# function plugin_ismoderator_japanize() {
+# 	return TRUE;
+# }
+# 
 function plugin_geticon_japanize() {
 	global $_CONF;
 
@@ -330,12 +331,24 @@ function plugin_cclabel_japanize() {
 }
 
 function plugin_getadminoption_japanize() {
-	global $_CONF, $LANG_JPN;
+	global $_CONF, $_TABLES, $LANG_JPN;
 
 	if (SEC_hasRights('japanize.edit')){
+		$count = 0;
+		$current = (int) @DB_getItem($_TABLES['vars'], 'value', "name='japanize_plugin'");
+		
+		for ($i = 1; $i <= 6; $i ++) {
+			$v = pow(2, $i - 1);
+			
+			if (($current & $v) === $v) {
+				$count ++;
+			}
+		}
+		
 		return array(
 			$LANG_JPN['piname'],
-			$_CONF['site_admin_url'] . '/plugins/japanize/index.php'
+			$_CONF['site_admin_url'] . '/plugins/japanize/index.php',
+			(string) $count . '/6'
 		);
 	} else {
 		return FALSE;

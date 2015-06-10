@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/language/japanese_utf-8.php                      |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2012 by the following authors:                         |
+// | Copyright (C) 2009-2013 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -38,6 +38,18 @@ $LANG_JPN = array(
 	'japanize_all' => '全部まとめて日本語化実行',
 	'restore_all'  => '全部まとめて英語版に戻す',
 	'cancel'       => 'キャンセル',
+	'msg_ja_1'     => 'テーブル構造・データを日本語化しました。',
+	'msg_en_1'     => 'テーブル構造・データを英語版に戻しました。',
+	'msg_ja_2'     => 'グループ管理画面の説明文を日本語化しました。',
+	'msg_en_2'     => 'グループ管理画面の説明文を英語版に戻しました。',
+	'msg_ja_3'     => '初期ブロックタイトルを日本語化しました。',
+	'msg_en_3'     => '初期ブロックタイトルを英語版に戻しました。',
+	'msg_ja_4'     => 'コンフィギュレーションを日本語化しました。',
+	'msg_en_4'     => 'コンフィギュレーションを英語版に戻しました。',
+	'msg_ja_5'     => '更新pingサーバーを追加しました。',
+	'msg_en_5'     => '更新pingサーバーを英語版のものに戻しました。',
+	'msg_ja_6'     => '権限のツールチップを日本語化しました。',
+	'msg_en_6'     => '権限のツールチップを英語版に戻しました。',
 );
 
 $LANG_configsections['japanize'] = array(

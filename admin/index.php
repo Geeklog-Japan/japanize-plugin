@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | public_html/admin/plugins/japanize/index.php                              |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2012 by the following authors:                         |
+// | Copyright (C) 2009-2013 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -96,6 +96,7 @@ $japanized = array(
 );
 
 $new = 0;
+$msgs = array();
 
 if ($needChange AND SEC_checkToken()) {
 	for ($type = 1; $type <= 6; $type ++) {
@@ -106,10 +107,21 @@ if ($needChange AND SEC_checkToken()) {
 		if ($checked[$type] !== $japanized[$type]) {
 			$lang = $checked[$type] ? 'ja' : 'en';
 			JAPANIZE_execute($type, $lang);
+			$msgs[] = JAPANIZE_str('msg_' . $lang . '_' . $type);
 		}
 	}
 } else {
 	$new = $current;
+}
+
+if (count($msgs) > 0) {
+	$li_style = ' style="margin: 0 0 0 2em; padding: 0;"';
+	$msgs = '<ol style="background-color: #ccff99; padding: 3px; border: solid 1px #33ccff;">'
+		  . '<li' . $li_style . '>'
+		  . implode('</li><li' . $li_style . '>', $msgs)
+		  . '</li></ol>';
+} else {
+	$msgs = '';
 }
 
 $new = addslashes($new);
@@ -129,10 +141,13 @@ $T = new Template($_CONF['path'] . 'plugins/japanize/templates/admin');
 $T->set_file('admin', 'index.thtml');
 $T->set_var(array(
 	'xhtml'             => XHTML,
+	'lang_piname'       => JAPANIZE_str('piname'),
 	'lang_execute'      => JAPANIZE_str('execute'),
 	'lang_japanize_all' => JAPANIZE_str('japanize_all'),
 	'lang_restore_all'  => JAPANIZE_str('restore_all'),
 	'lang_cancel'       => JAPANIZE_str('cancel'),
+	'icon_url'          => plugin_geticon_japanize(),
+	'msgs'              => $msgs,
 	'checked1'          => ($checked[1] ? ' checked="checked"' : ''),
 	'checked2'          => ($checked[2] ? ' checked="checked"' : ''),
 	'checked3'          => ($checked[3] ? ' checked="checked"' : ''),

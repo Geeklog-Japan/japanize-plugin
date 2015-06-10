@@ -1,5 +1,15 @@
-<div id="plugin-japanize">
-	<p style="padding: 3px; background-color: #ffffcc; border: solid 1px #66ccff;">日本語化したい項目にチェックを入れ、英語版に戻す項目はチェックを外してから、「実行」をクリックしてください。または、「全部まとめて日本語化実行」や「全部まとめて英語版に戻す」をクリックしてください。</p>
+<div class="block-center">
+	<h2>{lang_piname}</h2>
+	<div class="block-center-content">
+		<div id="admin-topmenu" class="clearfix">
+			<img src="{icon_url}" class="admin-menu-icon" alt=""{xhtml}>
+			<div id="admin-menu-fields">
+				<a href="http://localhost/geeklog200rc1/public_html/admin" class="admin-menu-item">管理画面</a>
+			</div>
+			<div id="instructions">日本語化したい項目にチェックを入れ、英語版に戻す項目はチェックを外してから、「実行」をクリックしてください。または、「全部まとめて日本語化実行」や「全部まとめて英語版に戻す」をクリックしてください。</div>
+		</div>
+	</div>
+	{msgs}
 	<div>
 	<form method="post" action="">
 		<input type="hidden" name="A[]" value="0"{xhtml}>
@@ -53,4 +63,5 @@
 		<input type="submit" name="cancel" value="{lang_cancel}"{xhtml}>
 		<input type="hidden" name="{token_name}" value="{token_value}"{xhtml}>
 	</form>
+	</div>
 </div>

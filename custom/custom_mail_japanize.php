@@ -7,7 +7,7 @@
 //            メールに戻します。
 //  @author   mystral-kk - geeklog AT mystral-kk DOT net
 //  @license  LGPL
-//  @version  2009-04-25
+//  @version  2013-01-02
 //  @note     このハックが不要な場合は、system/lib-custom.phpの中の
 //            require_once('custom/custom_mail_jp.php');
 //            を削除してください。
@@ -49,12 +49,13 @@ global $_CONF, $LANG_CHARSET, $_TABLES;
 /**
 * メールヘッダ・本文で使用するエンコーディング
 *
-* 英語版の動作に戻すには
-*   define('CUSTOM_MAIL_ENCODING', 'utf-8');
-* としてください。
+* UI言語を日本語にしている場合のみISO-2022-JPにし、それ以外の場合はutf-8にします。
 */
-define('CUSTOM_MAIL_ENCODING', 'ISO-2022-JP');
-// define('CUSTOM_MAIL_ENCODING', 'utf-8');
+if (strpos(strtolower(COM_getLanguage()), 'japanese') !== FALSE) {
+	define('CUSTOM_MAIL_ENCODING', 'ISO-2022-JP');
+} else {
+	define('CUSTOM_MAIL_ENCODING', 'utf-8');
+}
 
 /**
 * ヘッダのエンコード方法
