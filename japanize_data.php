@@ -3,9 +3,9 @@
 // +---------------------------------------------------------------------------+
 // | Japanize Plugin for Geeklog - The Ultimate Weblog                         |
 // +---------------------------------------------------------------------------+
-// | geeklog/plugins/japanize/data.php                                         |
+// | geeklog/plugins/japanize/japanize_data.php                                |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2012 by the following authors:                         |
+// | Copyright (C) 2009-2013 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -26,7 +26,7 @@
 // |                                                                           |
 // +---------------------------------------------------------------------------+
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), 'data.php') !== FALSE) {
+if (strpos(strtolower($_SERVER['PHP_SELF']), 'japanize_data.php') !== FALSE) {
 	die('This file cannot be used on its own.');
 }
 
