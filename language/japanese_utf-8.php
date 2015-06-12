@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/language/japanese_utf-8.php                      |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2013 by the following authors:                         |
+// | Copyright (C) 2009-2015 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -26,7 +26,7 @@
 // |                                                                           |
 // +---------------------------------------------------------------------------|
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), strtolower(basename(__FILE__))) !== FALSE) {
+if (stripos($_SERVER['PHP_SELF'], strtolower(basename(__FILE__))) !== false) {
 	die('This file cannot be used on its own!');
 }
 
@@ -69,5 +69,5 @@ $LANG_fs['japanize'] = array(
 
 $LANG_configselects['japanize'] = array(
 	0 => array('はい' => 1, 'いいえ' => 0),
-	1 => array('はい' => TRUE, 'いいえ' => FALSE)
+	1 => array('はい' => true, 'いいえ' => false)
 );

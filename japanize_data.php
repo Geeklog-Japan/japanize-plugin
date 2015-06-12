@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/japanize_data.php                                |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2013 by the following authors:                         |
+// | Copyright (C) 2009-2015 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -26,11 +26,23 @@
 // |                                                                           |
 // +---------------------------------------------------------------------------+
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), 'japanize_data.php') !== FALSE) {
+if (stripos($_SERVER['PHP_SELF'], 'japanize_data.php') !== false) {
 	die('This file cannot be used on its own.');
 }
 
-// Prepares locale data
+/**
+* Escape a string for SQL
+*
+* @param    string    $str
+* @return   string
+*/
+function dbEscape($str) {
+	return is_callable('DB_escapeString')
+			? DB_escapeString($str)
+			: addslashes($str);
+}
+
+// Prepare locale data
 $locale = array();
 
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -212,8 +224,8 @@ $_JAPANIZE_DATA[1] = array(
 	),
 	array(
 		'ja' => "UPDATE {$_TABLES['users']} "
-			. "SET username = '" . addslashes('ゲストユーザー') . "', "
-			. "    fullname = '" . addslashes('ゲストユーザー') . "' "
+			. "SET username = '" . dbEscape('ゲストユーザー') . "', "
+			. "    fullname = '" . dbEscape('ゲストユーザー') . "' "
 			. "WHERE (uid = 1) ",
 		'en' => "UPDATE {$_TABLES['users']} "
 			. "SET username = 'Anonymous', fullname = 'Anonymous' "
@@ -221,8 +233,8 @@ $_JAPANIZE_DATA[1] = array(
 	),
 	array(
 		'ja' => "UPDATE {$_TABLES['users']} "
-			. "SET fullname= '" . addslashes('サイト管理者') . "', homepage='"
-			. addslashes($_CONF['site_url']) . "' "
+			. "SET fullname= '" . dbEscape('サイト管理者') . "', homepage='"
+			. dbEscape($_CONF['site_url']) . "' "
 			. "WHERE (uid = 2) ",
 		'en' => "UPDATE {$_TABLES['users']} "
 			. "SET fullname= 'Geeklog SuperUser', homepage='http://www.geeklog.net/' "
@@ -230,30 +242,30 @@ $_JAPANIZE_DATA[1] = array(
 	),
 	array(
 		'ja' => "UPDATE {$_TABLES['stories']} "
-			. "SET title = '" . addslashes('Geeklogへようこそ!') . "', "
-			. "introtext = '" . addslashes("<p>無事インストールが完了したようですね。おめでとうございます。できれば、<a href=\"docs/japanese/index.html\">docs ディレクトリ</a>のすべての文書に一通り目を通しておいてください。Geeklogはユーザーを中心としたセキュリティモデルを実装しています。Geeklogを管理・運用するにはこの仕組みを理解する必要があります。</p>\n<p>サイトにログインするには、次のアカウントを使用してください:</p>\n<p>ユーザー名: <strong>Admin</strong><br />\nパスワード: <strong>password</strong></p><p><strong>ログインしたら、忘れずに<a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">パスワードを変更</a>してください。</strong></p><p>Geeklogのサポートは、<a href=\"http://www.geeklog.jp\">Geeklog Japanese</a>へ。追加ドキュメントは <a href=\"http://wiki.geeklog.jp\">Geeklog Wiki ドキュメント</a>をどうぞ。</p>") . "' "
+			. "SET title = '" . dbEscape('Geeklogへようこそ!') . "', "
+			. "introtext = '" . dbEscape("<p>無事インストールが完了したようですね。おめでとうございます。できれば、<a href=\"docs/japanese/index.html\">docs ディレクトリ</a>のすべての文書に一通り目を通しておいてください。Geeklogはユーザーを中心としたセキュリティモデルを実装しています。Geeklogを管理・運用するにはこの仕組みを理解する必要があります。</p>\n<p>サイトにログインするには、次のアカウントを使用してください:</p>\n<p>ユーザー名: <strong>Admin</strong><br />\nパスワード: <strong>password</strong></p><p><strong>ログインしたら、忘れずに<a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">パスワードを変更</a>してください。</strong></p><p>Geeklogのサポートは、<a href=\"http://www.geeklog.jp\">Geeklog Japanese</a>へ。追加ドキュメントは <a href=\"http://wiki.geeklog.jp\">Geeklog Wiki ドキュメント</a>をどうぞ。</p>") . "' "
 					. "WHERE (sid = 'welcome') ",
 		'en' => "UPDATE {$_TABLES['stories']} "
 			. "SET title = 'Welcome to Geeklog!', "
-			. "introtext = '" . addslashes("<p>Welcome and let me be the first to congratulate you on installing Geeklog. Please take the time to read everything in the <a href=\"docs/english/index.html\">docs directory</a>. Geeklog now has enhanced, user-based security.  You should thoroughly understand how these work before you run a production Geeklog Site.</p>\n<p>To log into your new Geeklog site, please use this account:</p>\n<p>Username: <b>Admin</b><br />\nPassword: <b>password</b></p><p><b>And don't forget to <a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">change your password</a> after logging in!</b></p>") . "' "
+			. "introtext = '" . dbEscape("<p>Welcome and let me be the first to congratulate you on installing Geeklog. Please take the time to read everything in the <a href=\"docs/english/index.html\">docs directory</a>. Geeklog now has enhanced, user-based security.  You should thoroughly understand how these work before you run a production Geeklog Site.</p>\n<p>To log into your new Geeklog site, please use this account:</p>\n<p>Username: <b>Admin</b><br />\nPassword: <b>password</b></p><p><b>And don't forget to <a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">change your password</a> after logging in!</b></p>") . "' "
 			. "WHERE (sid = 'welcome') ",
 	),
 	array(
 		'ja' => "UPDATE {$_TABLES['storysubmission']} "
-			. "SET title = '" . addslashes('セキュリティを確認してください。') . "', "
-			. "introtext = '" . addslashes("<p>インストールが終了したら、次のことを実行してセキュリティを高めてください。</p><ol>\n<li>Adminアカウントのパスワードを変更する。</li>\n<li>installディレクトリを削除する（もう必要ありません）。</li>\n</ol>") . "' "
+			. "SET title = '" . dbEscape('セキュリティを確認してください。') . "', "
+			. "introtext = '" . dbEscape("<p>インストールが終了したら、次のことを実行してセキュリティを高めてください。</p><ol>\n<li>Adminアカウントのパスワードを変更する。</li>\n<li>installディレクトリを削除する(もう必要ありません)。</li>\n</ol>") . "' "
 			. "WHERE (sid = 'security-reminder') ",
 		'en' => "UPDATE {$_TABLES['storysubmission']} "
 			. "SET title = 'Are you secure?', "
-			. "introtext = '" . addslashes("<p>This is a reminder to secure your site once you have Geeklog up and running. What you should do:</p>\n\n<ol>\n<li>Change the default password for the Admin account.</li>\n<li>Remove the install directory (you won't need it any more).</li>\n</ol>") . "' "
+			. "introtext = '" . dbEscape("<p>This is a reminder to secure your site once you have Geeklog up and running. What you should do:</p>\n\n<ol>\n<li>Change the default password for the Admin account.</li>\n<li>Remove the install directory (you won't need it any more).</li>\n</ol>") . "' "
 			. "WHERE (sid = 'security-reminder') ",
 	),
 	array(
 		'ja' => "UPDATE {$_TABLES['topics']} "
-			. "SET topic = '" . addslashes('おしらせ') . "' "
+			. "SET topic = '" . dbEscape('おしらせ') . "' "
 			. "WHERE (tid = 'General') ",
 		'en' => "UPDATE {$_TABLES['topics']} "
-			. "SET topic = '" . addslashes('General News') . "' "
+			. "SET topic = '" . dbEscape('General News') . "' "
 			. "WHERE (tid = 'General') ",
 	),
 );
@@ -277,12 +289,12 @@ if (DB_checkTableExists('events')) {
 if (DB_checkTableExists('linkcategories')) {
 	$_JAPANIZE_DATA[1][] = array(
 		'ja' => "UPDATE {$_TABLES['linkcategories']} "
-			. "SET description = '" . addslashes('Geeklog関係のサイト') . "' "
-			. "WHERE (cid = '" . addslashes('geeklog-sites') . "') ",
+			. "SET description = '" . dbEscape('Geeklog関係のサイト') . "' "
+			. "WHERE (cid = '" . dbEscape('geeklog-sites') . "') ",
 		'en' => "UPDATE {$_TABLES['linkcategories']} "
 			. "SET description = '"
-			. addslashes('Sites using or related to the Geeklog CMS') . "' "
-			. "WHERE (cid = '" . addslashes('geeklog-sites') . "') ",
+			. dbEscape('Sites using or related to the Geeklog CMS') . "' "
+			. "WHERE (cid = '" . dbEscape('geeklog-sites') . "') ",
 	);
 }
 
@@ -295,8 +307,8 @@ if (DB_checkTableExists('links')) {
 				. "owner_id, group_id, perm_owner, perm_group, "
 				. "perm_members, perm_anon) "
 				. "VALUES ('geeklog.jp', 'geeklog-sites', 'http://www.geeklog.jp/', "
-				. "'" . addslashes('Geeklog日本公式サイト') . "', '"
-				. addslashes('Geeklog Japanese') . "', 0, NOW(), 1, {$group_id}, "
+				. "'" . dbEscape('Geeklog日本公式サイト') . "', '"
+				. dbEscape('Geeklog Japanese') . "', 0, NOW(), 1, {$group_id}, "
 				. "3, 3, 2, 2) ",
 			'en' => "DELETE FROM {$_TABLES['links']} "
 				. "WHERE (lid = 'geeklog.jp')",
@@ -537,10 +549,10 @@ $_JAPANIZE_DATA[3] = array(
 	array(
 		'type' => 'sql',
 		'en'   => "UPDATE {$_TABLES['blocks']} "
-					. "SET title = 'About Geeklog', content = '" . addslashes('<p><strong>Welcome to Geeklog!</strong></p><p>If you\'re already familiar with Geeklog - and especially if you\'re not: There have been many improvements to Geeklog since earlier versions that you might want to read up on. Please read the <a href="docs/changes.html">release notes</a>. If you need help, please see the <a href="docs/support.html">support options</a>.</p>') . "' "
+					. "SET title = 'About Geeklog', content = '" . dbEscape('<p><strong>Welcome to Geeklog!</strong></p><p>If you\'re already familiar with Geeklog - and especially if you\'re not: There have been many improvements to Geeklog since earlier versions that you might want to read up on. Please read the <a href="docs/changes.html">release notes</a>. If you need help, please see the <a href="docs/support.html">support options</a>.</p>') . "' "
 					. "WHERE (name = 'first_block') ",
 		'ja'   => "UPDATE {$_TABLES['blocks']} "
-					. "SET title = 'Geeklogについて', content = '" . addslashes('<p><strong>ようこそ、Geeklogへ!</strong><p>Geeklogについてのサポートは、 <a href="http://www.geeklog.jp">Geeklog Japanese</a>へ。ドキュメントは <a href="http://wiki.geeklog.jp">Geeklog Wiki ドキュメント</a>をどうぞ。') . "' "
+					. "SET title = 'Geeklogについて', content = '" . dbEscape('<p><strong>ようこそ、Geeklogへ!</strong><p>Geeklogについてのサポートは、 <a href="http://www.geeklog.jp">Geeklog Japanese</a>へ。ドキュメントは <a href="http://wiki.geeklog.jp">Geeklog Wiki ドキュメント</a>をどうぞ。') . "' "
 					. "WHERE (name = 'first_block') ",
 	),
 );
@@ -561,22 +573,22 @@ $_JAPANIZE_DATA[4] = array(
 				'en' => 'en-gb',
 			),
 			
-			// 管理者ブロック･･･リンクをソートする=FALSE
+			// 管理者ブロック･･･リンクをソートする=false
 			'sort_admin' => array(
-				'ja' => FALSE,
-				'en' => TRUE,
+				'ja' => false,
+				'en' => true,
 			),
 			
 			// 話題ブロック･･･記事投稿数を表示する=いいえ
 			'showsubmissioncount' => array(
-				'ja' => FALSE,
-				'en' => TRUE,
+				'ja' => false,
+				'en' => true,
 			),
 			
 			// 話題ブロック･･･Homeへのリンクを表示しない=はい
 			'hide_home_link' => array(
-				'ja' => TRUE,
-				'en' => FALSE,
+				'ja' => true,
+				'en' => false,
 			),
 			
 			// コメント･･･コメント形状=flat
@@ -647,8 +659,8 @@ $_JAPANIZE_DATA[4] = array(
 			
 			// アドバンストエディタ
 			'advanced_editor' => array(
-				'ja' => FALSE,
-				'en' => TRUE,
+				'ja' => false,
+				'en' => true,
 			),
 			
 			// HTMLフィルタ･･･ユーザーHTML
@@ -673,7 +685,13 @@ $_JAPANIZE_DATA[4] = array(
 			'censormode' => array(
 				'ja' => 0,
 				'en' => 1,
-			)
+			),
+			
+			// URLリライト
+			'url_rewrite' => array(
+				'ja' => true,
+				'en' => false,
+			),
 		),
 		
 		'calendar' => array(

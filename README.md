@@ -10,6 +10,7 @@ Geeklog 日本語化(Japanize)プラグイン
 * 2012/12/31 modified & updated by mystral-kk (geeklog AT mystral-kk DOT net)
 * 2013/01/02 modified & updated by mystral-kk (geeklog AT mystral-kk DOT net)
 * 2015/06/10 added README.md
+* 2015/06/13 changed $_CONF['url_rewrite'] setting to true
 
 概要
 ----

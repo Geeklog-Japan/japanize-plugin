@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | public_html/admin/plugins/japanize/index.php                              |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2013 by the following authors:                         |
+// | Copyright (C) 2009-2015 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -46,7 +46,7 @@ if (!SEC_hasRights('japanize.edit')) {
 // | MAIN                                                                      |
 // +---------------------------------------------------------------------------+
 
-// Gets the current state of Japanization
+// Get the current state of Japanization
 if (DB_getItem($_TABLES['vars'], 'COUNT(*)', "name='japanize_plugin'") === '1') {
 	$current = (int) DB_getItem($_TABLES['vars'], 'value', "name='japanize_plugin'");
 } else {
@@ -55,17 +55,17 @@ if (DB_getItem($_TABLES['vars'], 'COUNT(*)', "name='japanize_plugin'") === '1') 
 
 $needChange = FALSE;
 
-if (isset($_POST['japanize_all']) AND
+if (isset($_POST['japanize_all']) &&
 		($_POST['japanize_all'] === JAPANIZE_str('japanize_all'))) {
 	$A = 63;
 	$needChange = TRUE;
-} else if (isset($_POST['restore_all']) AND
+} else if (isset($_POST['restore_all']) &&
 		($_POST['restore_all'] === JAPANIZE_str('restore_all'))) {
 	$A = 0;
 	$needChange = TRUE;
-} else if (isset($_POST['execute']) AND
-		($_POST['execute'] === JAPANIZE_str('execute')) AND
-		isset($_POST['A']) AND
+} else if (isset($_POST['execute']) &&
+		($_POST['execute'] === JAPANIZE_str('execute')) &&
+		isset($_POST['A']) &&
 		is_array($_POST['A'])) {
 	$A = 0;
 	$needChange = TRUE;
@@ -98,7 +98,7 @@ $japanized = array(
 $new = 0;
 $msgs = array();
 
-if ($needChange AND SEC_checkToken()) {
+if ($needChange && SEC_checkToken()) {
 	for ($type = 1; $type <= 6; $type ++) {
 		if ($checked[$type]) {
 			$new += pow(2, $type - 1);

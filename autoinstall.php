@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/autoinstall.php                                  |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2013 by the following authors:                         |
+// | Copyright (C) 2009-2015 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -26,7 +26,7 @@
 // |                                                                           |
 // +---------------------------------------------------------------------------+
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), 'autoinstall.php') !== FALSE) {
+if (stripos($_SERVER['PHP_SELF'], 'autoinstall.php') !== false) {
 	die('This file cannot be used on its own.');
 }
 
@@ -72,8 +72,8 @@ function plugin_load_configuration_japanize($pi_name) {
 }
 
 function plugin_compatible_with_this_version_japanize($pi_name) {
-	return function_exists('COM_truncate') AND
-		   function_exists('MBYTE_strpos') AND
-		   function_exists('SEC_createToken') AND
+	return function_exists('COM_truncate') &&
+		   function_exists('MBYTE_strpos') &&
+		   function_exists('SEC_createToken') &&
 		   !function_exists('custom_mail');
 }

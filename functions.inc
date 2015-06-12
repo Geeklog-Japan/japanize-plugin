@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/functions.inc                                    |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2013 by the following authors:                         |
+// | Copyright (C) 2009-2015 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -26,7 +26,7 @@
 // |                                                                           |
 // +---------------------------------------------------------------------------+
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), 'functions.inc') !== FALSE) {
+if (stripos($_SERVER['PHP_SELF'], 'functions.inc') !== false) {
 	die('This file cannot be used on its own.');
 }
 
@@ -41,16 +41,16 @@ if (file_exists($langfile)) {
 require_once 'version.php';
 require_once $_CONF['path'] . 'plugins/japanize/japanize_data.php';
 
-if (!is_callable('CUSTOM_convertEncoding') AND
-	!is_callable('CUSTOM_emailEscape') AND
-	!is_callable('CUSTOM_formatEmailAddress') AND
-	!is_callable('CUSTOM_splitAddress') AND
-	!is_callable('CUSTOM_mail')) {
+if (!is_callable('CUSTOM_convertEncoding') &&
+		!is_callable('CUSTOM_emailEscape') &&
+		!is_callable('CUSTOM_formatEmailAddress') &&
+		!is_callable('CUSTOM_splitAddress') &&
+		!is_callable('CUSTOM_mail')) {
 	require_once 'custom/custom_mail_japanize.php';
 }
 
 /**
-* Converts language file name to language ID
+* Convert language file name to language ID
 *
 * @param   string   $language
 * @return  string
@@ -110,7 +110,7 @@ function JAPANIZE_languageToLangId($language) {
 }
 
 /**
-* Sets a variable to {html_attribute} template var
+* Set a variable to {html_attribute} template var
 *
 * @param   object  $template
 * @return  (void)
@@ -274,7 +274,7 @@ function plugin_upgrade_japanize() {
 	global $_TABLES, $_JPN_CONF;
 
 	// the plugin needs these functions so complain when they doesn't exist
-	if (!is_callable('COM_truncate') OR !function_exists('MBYTE_strpos')) {
+	if (!is_callable('COM_truncate') || !function_exists('MBYTE_strpos')) {
 		return 3002;
 	}
 
@@ -285,7 +285,7 @@ function plugin_upgrade_japanize() {
 		 . "WHERE (pi_name = 'japanize') ";
 	DB_query($sql);
 
-	return TRUE;
+	return true;
 }
 
 function plugin_autouninstall_japanize() {
@@ -307,7 +307,7 @@ function plugin_autouninstall_japanize() {
 # * @return        boolean       Returns true if moderator
 # */
 # function plugin_ismoderator_japanize() {
-# 	return TRUE;
+# 	return true;
 # }
 # 
 function plugin_geticon_japanize() {
@@ -326,7 +326,7 @@ function plugin_cclabel_japanize() {
 			plugin_geticon_japanize()
 		);
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 
@@ -351,7 +351,7 @@ function plugin_getadminoption_japanize() {
 			(string) $count . '/6'
 		);
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 

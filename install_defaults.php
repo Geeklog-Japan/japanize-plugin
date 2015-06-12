@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/install_defaults.php                             |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2013 by the following authors:                         |
+// | Copyright (C) 2009-2015 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -26,7 +26,7 @@
 // |                                                                           |
 // +---------------------------------------------------------------------------+
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), 'install_defaults.php') !== FALSE) {
+if (stripos($_SERVER['PHP_SELF'], 'install_defaults.php') !== false) {
 	die('This file cannot be used on its own!');
 }
 
@@ -37,7 +37,7 @@ $_JAPANIZE_DEFAULT = array();
 /**
 * Initialize Links plugin configuration
 *
-* Creates the database entries for the configuation if they don't already
+* Create the database entries for the configuation if they don't already
 * exist. Initial values will be taken from $_LI_CONF if available (e.g. from
 * an old config.php), uses $_LI_DEFAULT otherwise.
 *
@@ -46,5 +46,5 @@ $_JAPANIZE_DEFAULT = array();
 function plugin_initconfig_japanize() {
 	global $_JAPANIZE_CONF, $_JAPANIZE_DEFAULT;
 
-	return TRUE;
+	return true;
 }
