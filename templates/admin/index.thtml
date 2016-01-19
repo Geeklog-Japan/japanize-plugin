@@ -1,10 +1,12 @@
+{# begin {templatelocation} #}
+
 <div class="block-center">
 	<h2>{lang_piname}</h2>
 	<div class="block-center-content">
 		<div id="admin-topmenu" class="clearfix">
 			<img src="{icon_url}" class="admin-menu-icon" alt=""{xhtml}>
 			<div id="admin-menu-fields">
-				<a href="http://localhost/geeklog200rc1/public_html/admin" class="admin-menu-item">管理画面</a>
+				<a href="{site_admin_url}" class="admin-menu-item">管理画面</a>
 			</div>
 			<div id="instructions">日本語化したい項目にチェックを入れ、英語版に戻す項目はチェックを外してから、「実行」をクリックしてください。または、「全部まとめて日本語化実行」や「全部まとめて英語版に戻す」をクリックしてください。</div>
 		</div>
@@ -65,3 +67,5 @@
 	</form>
 	</div>
 </div>
+
+{# end {templatelocation} #}

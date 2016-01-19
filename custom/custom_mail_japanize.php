@@ -37,7 +37,7 @@
 //      てみる。CUSTOM_ENCODEの場合は、「メールヘッダの1行の長さの最大値」を既
 //      定値の76を大きくすることで改善される場合があります。
 
-if (strpos(strtolower($_SERVER['PHP_SELF']), 'custom_mail_japanize.php') !== FALSE) {
+if (strpos(strtolower($_SERVER['PHP_SELF']), 'custom_mail_japanize.php') !== false) {
 	die('This file cannot be used on its own!');
 }
 
@@ -51,7 +51,7 @@ global $_CONF, $LANG_CHARSET, $_TABLES;
 *
 * UI言語を日本語にしている場合のみISO-2022-JPにし、それ以外の場合はutf-8にします。
 */
-if (strpos(strtolower(COM_getLanguage()), 'japanese') !== FALSE) {
+if (strpos(strtolower(COM_getLanguage()), 'japanese') !== false) {
 	define('CUSTOM_MAIL_ENCODING', 'ISO-2022-JP');
 } else {
 	define('CUSTOM_MAIL_ENCODING', 'utf-8');
@@ -303,7 +303,7 @@ function CUSTOM_splitAddress($string) {
 	} else {
 		$address = strrchr($string, '<');
 		
-		if ($address === FALSE) {
+		if ($address === false) {
 			COM_errorLog('CUSTOM_splitAddress: "<" not found.');
 			$address = $string;
 		} else {
@@ -322,7 +322,7 @@ function CUSTOM_splitAddress($string) {
 /**
 * Custom email function for creating an email message in ISO-2022-JP
 */
-function CUSTOM_mail($to, $subject, $message, $from = '', $html = FALSE,
+function CUSTOM_mail($to, $subject, $message, $from = '', $html = false,
 		$priority = 0, $cc = '') {
 	global $_CONF, $LANG_CHARSET;
 
@@ -415,9 +415,9 @@ function CUSTOM_mail($to, $subject, $message, $from = '', $html = FALSE,
 	$headers['X-Mailer'] = 'Geeklog-' . VERSION . ' (' . CUSTOM_MAIL_ENCODING . ')';
 	$retval = $mailobj->send($to, $headers, $message);
 	
-	if ($retval !== TRUE) {
+	if ($retval !== true) {
 		COM_errorLog($retval->toString(), 1);
 	}
 
-	return ($retval === TRUE);
+	return ($retval === true);
 }
