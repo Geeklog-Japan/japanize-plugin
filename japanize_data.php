@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/japanize_data.php                                |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2017 by the following authors:                         |
+// | Copyright (C) 2009-2019 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -29,6 +29,8 @@
 if (stripos($_SERVER['PHP_SELF'], basename(__FILE__)) !== false) {
     die('This file cannot be used on its own.');
 }
+
+global $_PLUGINS;
 
 // Prepares locale data
 $locale = array();
