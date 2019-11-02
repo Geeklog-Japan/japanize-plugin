@@ -18,11 +18,12 @@ Geeklog 日本語化(Japanize)プラグイン
 * 2016/01/30 v2.1.1.1 Modified to use {lang_attribute} instead of {html_attribute}
 * 2017/01/10 v2.1.2   Updated to work with Geeklog-2.1.2
 * 2017/03/21 v2.1.3   Fixed a bug that occurred when the Links plugin and/or the Calendar plugin was disabled
+* 2019/11/02 v2.2.1   Dropped Goo Ping
 
 概要
 ----
 
-Geeklog-1.6.x - 2.1.2 を日本人流にするプラグインです。詳細については管理画面をご参照ください。
+Geeklog-1.6.x - 2.2.1 を日本人流にするプラグインです。詳細については管理画面をご参照ください。
 
 ファイル構成
 ------------

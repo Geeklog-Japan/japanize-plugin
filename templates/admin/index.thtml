@@ -53,7 +53,7 @@
 		<input type="checkbox" id="ch5" name="A[]" value="16"{checked5}{xhtml}>
 		<label for="ch5">5. 更新pingサーバーの追加</label>
 		<ul>
-			<li>BlogPeople, PING.BLOGGERS.JP, gooブログ, Googleブログ検索を追加</li>
+			<li>BlogPeople, PING.BLOGGERS.JP, Googleブログ検索を追加</li>
 		</ul>
 
 		<input type="checkbox" id="ch6" name="A[]" value="32"{checked6}{xhtml}>

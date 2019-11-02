@@ -202,7 +202,7 @@ $_JAPANIZE_DATA[1] = array(
     ),
     array(
         'ja' => "UPDATE {$_TABLES['syndication']} "
-            . "SET charset = 'utf-8' ",
+            . "SET charset = 'utf8' ",
         'en' => "UPDATE {$_TABLES['syndication']} "
             . "SET charset = '" . COM_getCharset() . "' ",
     ),
@@ -257,6 +257,18 @@ $_JAPANIZE_DATA[1] = array(
         'en' => "UPDATE {$_TABLES['topics']} "
             . "SET topic = '" . DB_escapeString('General News') . "' "
             . "WHERE (tid = 'General') ",
+    ),
+    array(
+        'ja' => "UPDATE {$_TABLES['events']} "
+            . "SET title = '" . DB_escapeString('カレンダープラグインをインストール') . "', "
+            . "description = '" . DB_escapeString('カレンダープラグインをインストールしました。') . "', "
+            . "location = '" . DB_escapeString('あなたのWebサーバー') . "' "
+            . "WHERE (eid = '2008050110130162') ",
+        'en' => "UPDATE {$_TABLES['events']} "
+            . "SET title = 'Installed the Calendar plugin', "
+            . "description = 'Today, you successfully installed the Calendar plugin.', "
+            . "location = 'Your webserver' "
+            . "WHERE (eid = '2008050110130162') ",
     ),
 );
 
@@ -410,7 +422,7 @@ $_JAPANIZE_DATA[2] = array(
     ),
     array(
         'en'    => 'Has full access to japanize features',
-        'ja'    => '日本語化管理者',
+        'ja'    => 'Japanizeプラグイン管理者',
         'group' => 'japanize Admin',
     ),
     array(
@@ -442,6 +454,26 @@ $_JAPANIZE_DATA[2] = array(
         'en'    => 'Has full access to File Manager',
         'ja'    => 'ファイルマネージャー管理者',
         'group' => 'Filemanager Admin',
+    ),
+    array(
+        'en'    => 'Users in this group can administer the ReCAPTCHA plugin',
+        'ja'    => 'reCAPTCHAプラグイン管理者',
+        'group' => 'ReCAPTCHA Admin',
+    ),
+    array(
+        'en'    => 'Has full access to XMLSitemap features',
+        'ja'    => 'XMLSitemapプラグイン管理者',
+        'group' => 'XMLSitemap Admin',
+    ),
+    array(
+        'en'    => 'Has full access to language',
+        'ja'    => '翻訳言語管理者',
+        'group' => 'Language Admin',
+    ),
+    array(
+        'en'    => 'Has full access to themes',
+        'ja'    => 'テーマ管理者',
+        'group' => 'Theme Admin',
     ),
     array(
         'en'    => 'Users in this group can administer the Autotags plugin',
@@ -487,6 +519,11 @@ $_JAPANIZE_DATA[2] = array(
         'en'    => 'Users in this group can administer the themedit plugin',
         'ja'    => 'テーマエディタプラグイン管理者',
         'group' => 'themedit Admin',
+    ),
+    array(
+        'en'    => 'Users in this group can administer the Messenger plugin',
+        'ja'    => 'メッセンジャープラグイン管理者',
+        'group' => 'Messenger Admin',
     ),
 //  array(
 //      'en'    => 'Has full access to GoogleMaps features',
@@ -735,7 +772,7 @@ $_JAPANIZE_DATA[5] = array(
         'sql'      => "INSERT INTO {$_TABLES['pingservice']} (pid, name, "
                     . "site_url, ping_url, method, is_enabled) VALUES "
                     . "(0, 'BlogPeople', 'http://www.blogpeople.net/', "
-                    . "'http://www.blogpeople.net/servlet/weblogUpdates', "
+                    . "'http://www.blogpeople.net/ping/', "
                     . "'weblogUpdates.ping', 1) ",
     ),
     
@@ -749,21 +786,19 @@ $_JAPANIZE_DATA[5] = array(
     ),
     
     array(
-        'site_url' => 'http://blog.goo.ne.jp/',
-        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (pid, name, "
-                    . "site_url, ping_url, method, is_enabled) VALUES "
-                    . "(0, 'gooブログ', 'http://blog.goo.ne.jp/', "
-                    . "'http://blog.goo.ne.jp/XMLRPC', "
-                    . "'weblogUpdates.ping', 1) ",
-    ),
-    
-    array(
         'site_url' => 'http://blogsearch.google.co.jp/',
         'sql'      => "INSERT INTO {$_TABLES['pingservice']} (pid, name, "
                     . "site_url, ping_url, method, is_enabled) VALUES "
                     . "(0, 'Googleブログ検索', 'http://blogsearch.google.co.jp/', "
                     . "'http://blogsearch.google.co.jp/ping/RPC2', "
                     . "'weblogUpdates.extendedPing', 1) ",
+    ),
+
+    // Goo no longer seems to receive pings
+    array(
+        'site_url' => 'http://blog.goo.ne.jp/',
+        'sql'      => "DELETE FROM {$_TABLES['pingservice']} WHERE site_url ='"
+                    . DB_escapeString('http://blog.goo.ne.jp/') . "' ",
     ),
 );
 
