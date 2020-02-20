@@ -165,7 +165,7 @@ function JAPANIZE_setHtmlAttribute($template) {
     }
 
     $template->set_var('lang_attribute', $html_attribute);
-    $template->set_var('html_attribute', $html_attribute);	// Left for compatibility
+    $template->set_var('html_attribute', $html_attribute);  // Left for compatibility
 }
 
 function JAPANIZE_execute($type, $lang) {
@@ -290,6 +290,8 @@ function plugin_upgrade_japanize() {
 }
 
 function plugin_autouninstall_japanize() {
+    global $_TABLES;
+
     // Undo all Japanizations
     for ($type = 1; $type <= 5; $type ++) {
         JAPANIZE_execute($type, 'en');

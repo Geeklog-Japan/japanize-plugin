@@ -30,7 +30,7 @@ if (stripos($_SERVER['PHP_SELF'], basename(__FILE__)) !== false) {
     die('This file cannot be used on its own.');
 }
 
-global $_PLUGINS;
+global $_PLUGINS, $_TABLES;
 
 // Prepares locale data
 $locale = array();
