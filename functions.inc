@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/functions.inc                                    |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2019 by the following authors:                         |
+// | Copyright (C) 2009-2020 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -121,9 +121,11 @@ function JAPANIZE_setHtmlAttribute($template) {
     $langId = COM_getLanguageId();
 
     if ($langId === '') {
-        $langId = JAPANIZE_languageToLangId(@$_USER['language']);
-        
-        if ($langId === '') {
+        if (isset($_USER['language'])) {
+            $langId = JAPANIZE_languageToLangId($_USER['language']);
+        }
+
+        if (empty($langId)) {
             // Tries to derive the language id from the locale
             $l = explode('.', $_CONF['locale']); // get rid of character set
             $langId = $l[0];
