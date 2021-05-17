@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/japanize_data.php                                |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2019 by the following authors:                         |
+// | Copyright (C) 2009-2021 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -30,7 +30,9 @@ if (stripos($_SERVER['PHP_SELF'], basename(__FILE__)) !== false) {
     die('This file cannot be used on its own.');
 }
 
-global $_PLUGINS, $_TABLES;
+global $_PLUGINS, $_TABLES, $_DB_dbms;
+
+$isPgsql = ($_DB_dbms === 'pgsql');
 
 // Prepares locale data
 $locale = array();
@@ -188,104 +190,134 @@ $_JAPANIZE_DATA = array();
 
 // 1. テーブル構造とデータを変更する
 $_JAPANIZE_DATA[1] = array(
-    array(
-        'ja' => "ALTER TABLE {$_TABLES['syndication']} "
-            . "MODIFY language VARCHAR(20) NOT NULL DEFAULT 'ja' ",
-        'en' => "ALTER TABLE {$_TABLES['syndication']} "
-            . "MODIFY language VARCHAR(20) NOT NULL DEFAULT 'en-gb' ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['syndication']} "
-            . "SET language = 'ja' ",
-        'en' => "UPDATE {$_TABLES['syndication']} "
-            . "SET language = 'en-gb' ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['syndication']} "
-            . "SET charset = 'utf8' ",
-        'en' => "UPDATE {$_TABLES['syndication']} "
-            . "SET charset = '" . COM_getCharset() . "' ",
-    ),
-    array(
-        'ja' => "ALTER TABLE {$_TABLES['users']} "
-            . "MODIFY username VARCHAR(108) NOT NULL DEFAULT '' ",
-        'en' => "ALTER TABLE {$_TABLES['users']} "
-            . "MODIFY username VARCHAR(16) NOT NULL DEFAULT '' ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['users']} "
-            . "SET username = '" . DB_escapeString('ゲストユーザー') . "', "
-            . "    fullname = '" . DB_escapeString('ゲストユーザー') . "' "
-            . "WHERE (uid = 1) ",
-        'en' => "UPDATE {$_TABLES['users']} "
-            . "SET username = 'Anonymous', fullname = 'Anonymous' "
-            . "WHERE (uid = 1) ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['users']} "
-            . "SET fullname= '" . DB_escapeString('サイト管理者') . "', homepage='"
-            . DB_escapeString($_CONF['site_url']) . "' "
-            . "WHERE (uid = 2) ",
-        'en' => "UPDATE {$_TABLES['users']} "
-            . "SET fullname= 'Geeklog SuperUser', homepage='https://www.geeklog.net/' "
-            . "WHERE (uid = 2) ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['stories']} "
-            . "SET title = '" . DB_escapeString('Geeklogへようこそ!') . "', "
-            . "introtext = '" . DB_escapeString("<p>無事インストールが完了したようですね。おめでとうございます。できれば、<a href=\"docs/japanese/index.html\">docs ディレクトリ</a>のすべての文書に一通り目を通しておいてください。Geeklogはユーザーを中心としたセキュリティモデルを実装しています。Geeklogを管理・運用するにはこの仕組みを理解する必要があります。</p>\n<p>サイトにログインするには、次のアカウントを使用してください:</p>\n<p>ユーザー名: <strong>Admin</strong><br />\nパスワード: <strong>password</strong></p><p><strong>ログインしたら、忘れずに<a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">パスワードを変更</a>してください。</strong></p><p>Geeklogのサポートは、<a href=\"https://www.geeklog.jp\">Geeklog Japanese</a>へ。追加ドキュメントは <a href=\"https://wiki.geeklog.jp\">Geeklog Wiki ドキュメント</a>をどうぞ。</p>") . "' "
-                    . "WHERE (sid = 'welcome') ",
-        'en' => "UPDATE {$_TABLES['stories']} "
-            . "SET title = 'Welcome to Geeklog!', "
-            . "introtext = '" . DB_escapeString("<p>Welcome and let me be the first to congratulate you on installing Geeklog. Please take the time to read everything in the <a href=\"docs/english/index.html\">docs directory</a>. Geeklog now has enhanced, user-based security.  You should thoroughly understand how these work before you run a production Geeklog Site.</p>\n<p>To log into your new Geeklog site, please use this account:</p>\n<p>Username: <b>Admin</b><br />\nPassword: <b>password</b></p><p><b>And don't forget to <a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">change your password</a> after logging in!</b></p>") . "' "
-            . "WHERE (sid = 'welcome') ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['storysubmission']} "
-            . "SET title = '" . DB_escapeString('セキュリティを確認してください。') . "', "
-            . "introtext = '" . DB_escapeString("<p>インストールが終了したら、次のことを実行してセキュリティを高めてください。</p><ol>\n<li>Adminアカウントのパスワードを変更する。</li>\n<li>installディレクトリを削除する（もう必要ありません）。</li>\n</ol>") . "' "
-            . "WHERE (sid = 'security-reminder') ",
-        'en' => "UPDATE {$_TABLES['storysubmission']} "
-            . "SET title = 'Are you secure?', "
-            . "introtext = '" . DB_escapeString("<p>This is a reminder to secure your site once you have Geeklog up and running. What you should do:</p>\n\n<ol>\n<li>Change the default password for the Admin account.</li>\n<li>Remove the install directory (you won't need it any more).</li>\n</ol>") . "' "
-            . "WHERE (sid = 'security-reminder') ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['topics']} "
-            . "SET topic = '" . DB_escapeString('おしらせ') . "' "
-            . "WHERE (tid = 'General') ",
-        'en' => "UPDATE {$_TABLES['topics']} "
-            . "SET topic = '" . DB_escapeString('General News') . "' "
-            . "WHERE (tid = 'General') ",
-    ),
-    array(
-        'ja' => "UPDATE {$_TABLES['events']} "
-            . "SET title = '" . DB_escapeString('カレンダープラグインをインストール') . "', "
-            . "description = '" . DB_escapeString('カレンダープラグインをインストールしました。') . "', "
-            . "location = '" . DB_escapeString('あなたのWebサーバー') . "' "
-            . "WHERE (eid = '2008050110130162') ",
-        'en' => "UPDATE {$_TABLES['events']} "
-            . "SET title = 'Installed the Calendar plugin', "
-            . "description = 'Today, you successfully installed the Calendar plugin.', "
-            . "location = 'Your webserver' "
-            . "WHERE (eid = '2008050110130162') ",
-    ),
+    0 => array(
+             'ja' => "ALTER TABLE {$_TABLES['syndication']} "
+                  . "MODIFY language VARCHAR(20) NOT NULL DEFAULT 'ja' ",
+             'en' => "ALTER TABLE {$_TABLES['syndication']} "
+                  . "MODIFY language VARCHAR(20) NOT NULL DEFAULT 'en-gb' ",
+         ),
+    1 => array(
+             'ja' => "UPDATE {$_TABLES['syndication']} "
+                  . "SET language = 'ja' ",
+             'en' => "UPDATE {$_TABLES['syndication']} "
+                  . "SET language = 'en-gb' ",
+         ),
+    2 => array(
+             'ja' => "UPDATE {$_TABLES['syndication']} "
+                  . "SET charset = 'utf8' ",
+             'en' => "UPDATE {$_TABLES['syndication']} "
+                  . "SET charset = '" . COM_getCharset() . "' ",
+         ),
+    3 => array(
+             'ja' => "ALTER TABLE {$_TABLES['users']} "
+                  . "MODIFY username VARCHAR(108) NOT NULL DEFAULT '' ",
+             'en' => "ALTER TABLE {$_TABLES['users']} "
+                  . "MODIFY username VARCHAR(16) NOT NULL DEFAULT '' ",
+         ),
+    4 => array(
+             'ja' => "UPDATE {$_TABLES['users']} "
+                  . "SET username = '" . DB_escapeString('ゲストユーザー') . "', "
+                  . "    fullname = '" . DB_escapeString('ゲストユーザー') . "' "
+                  . "WHERE (uid = 1) ",
+             'en' => "UPDATE {$_TABLES['users']} "
+                  . "SET username = 'Anonymous', fullname = 'Anonymous' "
+                  . "WHERE (uid = 1) ",
+         ),
+    5 => array(
+             'ja' => "UPDATE {$_TABLES['users']} "
+                  . "SET fullname= '" . DB_escapeString('サイト管理者') . "', homepage='"
+                  . DB_escapeString($_CONF['site_url']) . "' "
+                  . "WHERE (uid = 2) ",
+             'en' => "UPDATE {$_TABLES['users']} "
+                  . "SET fullname= 'Geeklog SuperUser', homepage='https://www.geeklog.net/' "
+                  . "WHERE (uid = 2) ",
+         ),
+    6 => array(
+             'ja' => "UPDATE {$_TABLES['stories']} "
+                  . "SET title = '" . DB_escapeString('Geeklogへようこそ!') . "', "
+                  . "introtext = '" . DB_escapeString("<p>無事インストールが完了したようですね。おめでとうございます。できれば、<a href=\"docs/japanese/index.html\">docs ディレクトリ</a>のすべての文書に一通り目を通しておいてください。Geeklogはユーザーを中心としたセキュリティモデルを実装しています。Geeklogを管理・運用するにはこの仕組みを理解する必要があります。</p>\n<p>サイトにログインするには、次のアカウントを使用してください:</p>\n<p>ユーザー名: <strong>Admin</strong><br />\nパスワード: <strong>password</strong></p><p><strong>ログインしたら、忘れずに<a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">パスワードを変更</a>してください。</strong></p><p>Geeklogのサポートは、<a href=\"https://www.geeklog.jp\">Geeklog Japanese</a>へ。追加ドキュメントは <a href=\"https://wiki.geeklog.jp\">Geeklog Wiki ドキュメント</a>をどうぞ。</p>") . "' "
+                  . "WHERE (sid = 'welcome') ",
+             'en' => "UPDATE {$_TABLES['stories']} "
+                  . "SET title = 'Welcome to Geeklog!', "
+                  . "introtext = '" . DB_escapeString("<p>Welcome and let me be the first to congratulate you on installing Geeklog. Please take the time to read everything in the <a href=\"docs/english/index.html\">docs directory</a>. Geeklog now has enhanced, user-based security.  You should thoroughly understand how these work before you run a production Geeklog Site.</p>\n<p>To log into your new Geeklog site, please use this account:</p>\n<p>Username: <b>Admin</b><br />\nPassword: <b>password</b></p><p><b>And don't forget to <a href=\"{$_CONF['site_url']}/usersettings.php?mode=edit\">change your password</a> after logging in!</b></p>") . "' "
+                  . "WHERE (sid = 'welcome') ",
+         ),
+    7 => array(
+             'ja' => "UPDATE {$_TABLES['storysubmission']} "
+                  . "SET title = '" . DB_escapeString('セキュリティを確認してください。') . "', "
+                  . "introtext = '" . DB_escapeString("<p>インストールが終了したら、次のことを実行してセキュリティを高めてください。</p><ol>\n<li>Adminアカウントのパスワードを変更する。</li>\n<li>installディレクトリを削除する（もう必要ありません）。</li>\n</ol>") . "' "
+                  . "WHERE (sid = 'security-reminder') ",
+             'en' => "UPDATE {$_TABLES['storysubmission']} "
+                  . "SET title = 'Are you secure?', "
+                  . "introtext = '" . DB_escapeString("<p>This is a reminder to secure your site once you have Geeklog up and running. What you should do:</p>\n\n<ol>\n<li>Change the default password for the Admin account.</li>\n<li>Remove the install directory (you won't need it any more).</li>\n</ol>") . "' "
+                  . "WHERE (sid = 'security-reminder') ",
+         ),
+    8 => array(
+             'ja' => "UPDATE {$_TABLES['topics']} "
+                  . "SET topic = '" . DB_escapeString('おしらせ') . "' "
+                  . "WHERE (tid = 'General') ",
+             'en' => "UPDATE {$_TABLES['topics']} "
+                  . "SET topic = '" . DB_escapeString('General News') . "' "
+                  . "WHERE (tid = 'General') ",
+         ),
+    9 => array(
+             'ja' => "UPDATE {$_TABLES['events']} "
+                  . "SET title = '" . DB_escapeString('カレンダープラグインをインストール') . "', "
+                  . "description = '" . DB_escapeString('カレンダープラグインをインストールしました。') . "', "
+                  . "location = '" . DB_escapeString('あなたのWebサーバー') . "' "
+                  . "WHERE (eid = '2008050110130162') ",
+             'en' => "UPDATE {$_TABLES['events']} "
+                  . "SET title = 'Installed the Calendar plugin', "
+                  . "description = 'Today, you successfully installed the Calendar plugin.', "
+                  . "location = 'Your webserver' "
+                  . "WHERE (eid = '2008050110130162') ",
+         ),
 );
+
+if ($isPgsql) {
+    $_JAPANIZE_DATA[1][0] = array(
+        'ja' => "ALTER TABLE {$_TABLES['syndication']} "
+             . "ALTER COLUMN language SET DEFAULT 'ja' ",
+        'en' => "ALTER TABLE {$_TABLES['syndication']} "
+             . "ALTER COLUMN language SET DEFAULT 'en-gb' ",
+    );
+    $_JAPANIZE_DATA[1][3] = array(
+       'ja' => "ALTER TABLE {$_TABLES['users']} "
+            . "ALTER COLUMN username TYPE VARCHAR(108) ",
+       'en' => "ALTER TABLE {$_TABLES['users']} "
+            . "ALTER COLUMN username TYPE VARCHAR(16) ",
+    );
+}
 
 if (in_array('calendar', $_PLUGINS) && DB_checkTableExists('events')) {
     // イベントの郵便番号を16桁に
-    $_JAPANIZE_DATA[1][] = array(
-        'ja' => "ALTER TABLE {$_TABLES['events']} MODIFY zipcode VARCHAR(16)",
-        'en' => "SELECT 1", // Dummy
-    );
-    $_JAPANIZE_DATA[1][] = array(
-        'ja' => "ALTER TABLE {$_TABLES['eventsubmission']} MODIFY zipcode VARCHAR(16)",
-        'en' => "SELECT 1", // Dummy
-    );
-    $_JAPANIZE_DATA[1][] = array(
-        'ja' => "ALTER TABLE {$_TABLES['personal_events']} MODIFY zipcode VARCHAR(16)",
-        'en' => "SELECT 1", // Dummy
-    );
+    if ($isPgsql) {
+        $_JAPANIZE_DATA[1][] = array(
+            'ja' => "ALTER TABLE {$_TABLES['events']} ALTER COLUMN zipcode TYPE VARCHAR(16) ",
+            'en' => "SELECT 1", // Dummy
+        );
+        $_JAPANIZE_DATA[1][] = array(
+            'ja' => "ALTER TABLE {$_TABLES['eventsubmission']} ALTER COLUMN zipcode TYPE VARCHAR(16) ",
+            'en' => "SELECT 1", // Dummy
+        );
+        $_JAPANIZE_DATA[1][] = array(
+            'ja' => "ALTER TABLE {$_TABLES['personal_events']} ALTER COLUMN zipcode TYPE VARCHAR(16) ",
+            'en' => "SELECT 1", // Dummy
+        );
+    } else {
+        $_JAPANIZE_DATA[1][] = array(
+            'ja' => "ALTER TABLE {$_TABLES['events']} MODIFY zipcode VARCHAR(16)",
+            'en' => "SELECT 1", // Dummy
+        );
+        $_JAPANIZE_DATA[1][] = array(
+            'ja' => "ALTER TABLE {$_TABLES['eventsubmission']} MODIFY zipcode VARCHAR(16)",
+            'en' => "SELECT 1", // Dummy
+        );
+        $_JAPANIZE_DATA[1][] = array(
+            'ja' => "ALTER TABLE {$_TABLES['personal_events']} MODIFY zipcode VARCHAR(16)",
+            'en' => "SELECT 1", // Dummy
+        );
+    }
 }
 
 if (in_array('links', $_PLUGINS) && DB_checkTableExists('linkcategories')) {
@@ -423,7 +455,7 @@ $_JAPANIZE_DATA[2] = array(
     array(
         'en'    => 'Has full access to japanize features',
         'ja'    => 'Japanizeプラグイン管理者',
-        'group' => 'japanize Admin',
+        'group' => 'Japanize Admin',
     ),
     array(
         'en'    => 'Users in this group can administer the filemgmt plugin',
@@ -458,7 +490,7 @@ $_JAPANIZE_DATA[2] = array(
     array(
         'en'    => 'Users in this group can administer the ReCAPTCHA plugin',
         'ja'    => 'reCAPTCHAプラグイン管理者',
-        'group' => 'ReCAPTCHA Admin',
+        'group' => 'reCAPTCHA Admin',
     ),
     array(
         'en'    => 'Has full access to XMLSitemap features',
@@ -769,31 +801,22 @@ $_JAPANIZE_DATA[4] = array(
 $_JAPANIZE_DATA[5] = array(
     array(
         'site_url' => 'http://www.blogpeople.net/',
-        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (pid, name, "
-                    . "site_url, ping_url, method, is_enabled) VALUES "
-                    . "(0, 'BlogPeople', 'http://www.blogpeople.net/', "
-                    . "'http://www.blogpeople.net/ping/', "
-                    . "'weblogUpdates.ping', 1) ",
+        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (name, site_url, ping_url, method, is_enabled) "
+                    . "VALUES ('BlogPeople', 'http://www.blogpeople.net/', "
+                    . "'http://www.blogpeople.net/ping/', 'weblogUpdates.ping', 1) ",
     ),
-    
     array(
         'site_url' => 'http://ping.bloggers.jp/',
-        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (pid, name, "
-                    . "site_url, ping_url, method, is_enabled) VALUES "
-                    . "(0, 'ping.bloggers.jp', 'http://ping.bloggers.jp/', "
-                    . "'http://ping.bloggers.jp/rpc/', "
-                    . "'weblogUpdates.ping', 1) ",
+        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (name, site_url, ping_url, method, is_enabled) "
+                    . "VALUES ('ping.bloggers.jp', 'http://ping.bloggers.jp/', "
+                    . "'http://ping.bloggers.jp/rpc/', 'weblogUpdates.ping', 1) ",
     ),
-    
     array(
         'site_url' => 'http://blogsearch.google.co.jp/',
-        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (pid, name, "
-                    . "site_url, ping_url, method, is_enabled) VALUES "
-                    . "(0, 'Googleブログ検索', 'http://blogsearch.google.co.jp/', "
-                    . "'http://blogsearch.google.co.jp/ping/RPC2', "
-                    . "'weblogUpdates.extendedPing', 1) ",
+        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (name, site_url, ping_url, method, is_enabled) "
+                    . "VALUES ('Googleブログ検索', 'http://blogsearch.google.co.jp/', "
+                    . "'http://blogsearch.google.co.jp/ping/RPC2', 'weblogUpdates.extendedPing', 1) ",
     ),
-
     // Goo no longer seems to receive pings
     array(
         'site_url' => 'http://blog.goo.ne.jp/',

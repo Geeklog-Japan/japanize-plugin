@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/functions.inc                                    |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2020 by the following authors:                         |
+// | Copyright (C) 2009-2021 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -235,8 +235,7 @@ function JAPANIZE_execute($type, $lang) {
                     }
                 } else {
                     $sql = "DELETE FROM {$_TABLES['pingservice']} "
-                         . "WHERE (site_url = '" . DB_escapeString($d['site_url']) . "') "
-                         . "LIMIT 1 ";
+                         . "WHERE (site_url = '" . DB_escapeString($d['site_url']) . "') ";
                     DB_query($sql);
                 }
             }

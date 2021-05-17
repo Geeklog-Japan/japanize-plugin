@@ -19,11 +19,13 @@ Geeklog 日本語化(Japanize)プラグイン
 * 2017/01/10 v2.1.2   Updated to work with Geeklog-2.1.2
 * 2017/03/21 v2.1.3   Fixed a bug that occurred when the Links plugin and/or the Calendar plugin was disabled
 * 2019/11/02 v2.2.1   Dropped Goo Ping
+* 2021/05/17 v2.2.1.1 Added support for PostgreSQL
 
 概要
 ----
 
 Geeklog-1.6.x - 2.2.1 を日本人流にするプラグインです。詳細については管理画面をご参照ください。
+v2.2.1.1よりPostgreSQLにも対応しました。
 
 ファイル構成
 ------------

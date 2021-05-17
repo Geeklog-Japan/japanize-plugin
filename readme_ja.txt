@@ -18,10 +18,12 @@ geeklog AT mystral-kk DOT net
 2017/05/01 v2.1.3.1 Fixed a bug which prevented the Japanize plugin from being 
                     installed on Geeklog 2.1.2
 2019/11/02 v2.2.1   Dropped Goo Ping
+2021/05/17 v2.2.1.1 Added support for PostgreSQL
 
 --------------------------------------------------------------------------------
 概要: Geeklog-2.2.1 を日本人流にするプラグインです
        詳細については管理画面をご参照ください。
+       v2.2.1.1よりPostgreSQLにも対応しました。
 --------------------------------------------------------------------------------
 ファイル構成
 -japanize
