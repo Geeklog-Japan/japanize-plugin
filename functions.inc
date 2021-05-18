@@ -300,7 +300,7 @@ function plugin_autouninstall_japanize() {
     
     return array(
         'tables'     => array(),
-        'groups'     => array('japanize Admin'),
+        'groups'     => array('Japanize Admin'),
         'features'   => array('japanize.edit'),
         'php_blocks' => array(),
         'vars'       => array('japanize_plugin'),
