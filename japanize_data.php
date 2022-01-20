@@ -5,7 +5,7 @@
 // +---------------------------------------------------------------------------+
 // | geeklog/plugins/japanize/japanize_data.php                                |
 // +---------------------------------------------------------------------------+
-// | Copyright (C) 2009-2021 by the following authors:                         |
+// | Copyright (C) 2009-2022 by the following authors:                         |
 // |                                                                           |
 // | Authors: Tsuchi           - tsuchi AT geeklog DOT jp                      |
 // |          mystral-kk       - geeklog AT mystral-kk DOT net                 |
@@ -800,28 +800,10 @@ $_JAPANIZE_DATA[4] = array(
 // 5. 更新Pingサーバーを変更する
 $_JAPANIZE_DATA[5] = array(
     array(
-        'site_url' => 'http://www.blogpeople.net/',
-        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (name, site_url, ping_url, method, is_enabled) "
-                    . "VALUES ('BlogPeople', 'http://www.blogpeople.net/', "
-                    . "'http://www.blogpeople.net/ping/', 'weblogUpdates.ping', 1) ",
-    ),
-    array(
         'site_url' => 'http://ping.bloggers.jp/',
         'sql'      => "INSERT INTO {$_TABLES['pingservice']} (name, site_url, ping_url, method, is_enabled) "
                     . "VALUES ('ping.bloggers.jp', 'http://ping.bloggers.jp/', "
                     . "'http://ping.bloggers.jp/rpc/', 'weblogUpdates.ping', 1) ",
-    ),
-    array(
-        'site_url' => 'http://blogsearch.google.co.jp/',
-        'sql'      => "INSERT INTO {$_TABLES['pingservice']} (name, site_url, ping_url, method, is_enabled) "
-                    . "VALUES ('Googleブログ検索', 'http://blogsearch.google.co.jp/', "
-                    . "'http://blogsearch.google.co.jp/ping/RPC2', 'weblogUpdates.extendedPing', 1) ",
-    ),
-    // Goo no longer seems to receive pings
-    array(
-        'site_url' => 'http://blog.goo.ne.jp/',
-        'sql'      => "DELETE FROM {$_TABLES['pingservice']} WHERE site_url ='"
-                    . DB_escapeString('http://blog.goo.ne.jp/') . "' ",
     ),
 );
 
